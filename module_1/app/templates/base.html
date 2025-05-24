@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <title>Jacob's Website - {% block title %}{% endblock title %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+{% include("_navigation.html") %}
+<section>
+  <header>
+    {% block header %}{% endblock header %}
+  </header>
+  <main>
+    {% block content %}<p>No text found.</p>{% endblock content %}
+  </main>
+</section>
+</body>
+</html>

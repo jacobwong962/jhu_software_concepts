@@ -1,8 +1,8 @@
 from flask import Flask
-from pages import bp
+from app import pages
 
 def create_app():
     app = Flask(__name__)
 
-    app.register_blueprint(bp)
+    app.register_blueprint(pages.bp)
     return app

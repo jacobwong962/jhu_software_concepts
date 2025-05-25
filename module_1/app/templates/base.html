@@ -1,20 +1,41 @@
+<!--
+  base.html
+
+  This is the base template for the Module 1 Flask application assignment. 
+  It defines the overall HTML structure of the site, ensuring a consistent
+  visual design across the entire app.
+  
+  Child templates that extend from base.html:
+    - home.html
+    - projects.html
+    - contact.html
+-->
+
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
+  <!-- Page title -->
   <title>Portfolio - {% block title %}{% endblock title %}</title>
+
+  <!-- Style sheets -->
   <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
+
 <body>
-{% include("_navigation.html") %}
-<section>
-  <header class="m-3">
-    {% block header %}{% endblock header %}
-  </header>
-  <main class="mx-2">
-    {% block content %}<p>No text found.</p>{% endblock content %}
-    
-  </main>
-</section>
+  <!-- Navigation Bar -->
+  {% include("_navigation.html") %}
+  <section>
+    <header class="m-3">
+      <!-- Header of the page -->
+      {% block header %}{% endblock header %}
+    </header>
+    <main class="mx-2">
+      <!-- Text of the page -->
+      {% block content %}<p>No text found.</p>{% endblock content %}
+      
+    </main>
+  </section>
 </body>
 </html>

@@ -1,7 +1,8 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <title>Jacob's Website - {% block title %}{% endblock title %}</title>
+  <title>Portfolio - {% block title %}{% endblock title %}</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='bootstrap.min.css') }}">
   <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
@@ -11,7 +12,15 @@
     {% block header %}{% endblock header %}
   </header>
   <main>
-    {% block content %}<p>No text found.</p>{% endblock content %}
+    <div class="container text-start mx-0">
+      <div class="row">
+        <div class="col-8 text-start">
+          {% block content %}<p>No text found.</p>{% endblock content %}
+        </div>
+        <div class="col-4 text-end">
+          {% block image %}{% endblock image %}
+        </div>
+    
   </main>
 </section>
 </body>

@@ -1,34 +1,20 @@
-* {
-    box-sizing: border-box;
-  }
-  
-  body {
-    font-family: sans-serif;
-    font-size: 20px;
-    margin: 0 auto;
-    text-align: center;
-  }
-  
-  a,
-  a:visited {
-    color: #007bff;
-  }
-  
-  a:hover {
-    color: #0056b3;
-  }
-  
-  nav ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  nav ul li {
-    display: inline;
-    margin: 0 5px;
-  }
-  
-  main {
-    width: 80%;
-    margin: 0 auto;
-  }
+.nav-link {
+  color: white !important;
+}
+
+.nav-link:hover {
+  color: #949494 !important;  
+}
+
+.active {
+  color: #d6d857 !important;  
+}
+
+.profile-image {
+    float: right !important;
+    display: block !important;
+    margin-left: auto !important;
+    margin-right: 0 !important;
+}
+
+

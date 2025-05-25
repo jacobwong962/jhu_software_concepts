@@ -6,19 +6,25 @@
 {% endblock header %}
   
 {% block content %}
-  <p>
-    Jacob Wong is a graduate student at Johns Hopkins University pursuing a 
-    Master's degree in Artificial Intelligence. For his undergraduate degree, 
-    Jacob studied at Cal Poly SLO and earned a Bachelor's of Science in 
-    Mechanical Engineering. With his bachelor's, Jacob worked for 2.5 years 
-    as a Mechanical Design Engineer at a battery research company called 
-    QuantumScape. He now aspires to combine his mechanical engineering skills 
-    with an education in AI to explore the field of AI/Robotics.
-  </p>
+  <div class="container text-start mx-0">
+      <div class="row">
+        <div class="col-8 text-start">
+          <p>
+            Jacob Wong is a graduate student at Johns Hopkins University pursuing a 
+            Master's degree in Artificial Intelligence. For his undergraduate degree, 
+            Jacob studied at Cal Poly SLO and earned a Bachelor's of Science in 
+            Mechanical Engineering. With his bachelor's, Jacob worked for 2.5 years 
+            as a Mechanical Design Engineer at a battery research company called 
+            QuantumScape. He now aspires to combine his mechanical engineering skills 
+            with an education in AI to explore the field of AI/Robotics.
+          </p>
+        </div>
+        <div class="col-4 text-end">
+          <img src="{{ url_for('static', filename='images/profile_picture.jpg') }}" 
+          class="img-fluid rounded"
+          style="max-width: 350px">
+        </div>
+
+    
 {% endblock content %}
 
-{% block image %}
-  <img src="{{ url_for('static', filename='images/profile_picture.jpg') }}" 
-        class="img-fluid rounded"
-        style="max-width: 350px">
-{% endblock image %}

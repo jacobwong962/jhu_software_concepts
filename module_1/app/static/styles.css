@@ -7,14 +7,10 @@
 }
 
 .active {
-  color: #d6d857 !important;  
+  background-color: #fffa00;  
+  color: #000000 !important;
+  border-radius: 5px;
 }
 
-.profile-image {
-    float: right !important;
-    display: block !important;
-    margin-left: auto !important;
-    margin-right: 0 !important;
-}
 
 

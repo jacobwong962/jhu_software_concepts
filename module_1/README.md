@@ -4,27 +4,27 @@ biography, software projects, and contact information. Creating this website
 fulfills the requirements of the Module 1 Assignment.
 
 ## File Structure
-module_1/
-│
-├── app/                 
-│   └── static/
-│       ├── bootstrap.min.css
-│       ├── styles.css
-│       ├── images/
-│           └── prolfile_picture.jpg
-│   └── templates/              
-│       ├── base.html
-│       ├── _navigation.html
-│       └── pages/
-│           ├── home.html
-│           ├── projects.html
-│           └── contacts.html
-│   └── __init__.py
-│   └── pages.py
-│
-├── run.py                  
-├── requirements.txt         
-└── README.md         
+module_1/<br>
+│<br>
+├── app/<br>              
+│   └── static/<br>
+│       ├── bootstrap.min.css<br>
+│       ├── styles.css<br>
+│       ├── images/<br>
+│           └── prolfile_picture.jpg<br>
+│   └── templates/<br> 
+│       ├── base.html<br>
+│       ├── _navigation.html<br>
+│       └── pages/<br>
+│           ├── home.html<br>
+│           ├── projects.html<br>
+│           └── contacts.html<br>
+│   └── __init__.py<br>
+│   └── pages.py<br>
+│<br>
+├── run.py<br> 
+├── requirements.txt<br>     
+└── README.md<br>
 
 ## Getting Started
 1. Clone the repository from Github and make it your current directory in your terminal.

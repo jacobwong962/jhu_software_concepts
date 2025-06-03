@@ -11,21 +11,21 @@ def scrape_data():
     rows = soup.find_all("tr")[1:]
 
     scraped_data = []
-    for row in rows[:10]:
+    for row in rows[:100]:
         cells = row.find_all('td')
         text_cells = [cell.get_text(strip=True) for cell in cells]
         scraped_data.append(text_cells)
     
     return scraped_data
 
-def create_entry(scraped_data):
+def create_entries(scraped_data):
     i = 0
     entries = []
-    while i < len(scraped_data):
-        entry = {'row_1':scraped_data[i];
+    while i < len(scraped_data) - 1:
+        entry = {'row_1':scraped_data[i],
                  'row_2':scraped_data[i+1]}
         if i+2 < len(scraped_data) and len(scraped_data[i+2]) == 1:
-            entry.append(scraped_data[i+2])
+            entry['row_3'] = scraped_data[i+2]
             i += 1
         entries.append(entry)
         i += 2
@@ -35,5 +35,5 @@ def create_entry(scraped_data):
 
 if __name__ =="__main__":
     scraped_data = scrape_data()
-    entries = create_entry(scraped_data)
+    entries = create_entries(scraped_data)
     

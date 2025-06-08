@@ -1,5 +1,6 @@
 import json
 import psycopg2
+from datetime import datetime
 
 def load_json_data(file_name):
     with open(file_name, 'r', encoding='utf-8') as f:
@@ -36,18 +37,30 @@ def create_table(connection):
         connection.commit()
         print("Table created successfully.")
 
+def _try_float(val):
+    try:
+        return float(val)
+    except (TypeError,ValueError):
+        return None
+
+def _parse_date(date_str):
+    try:
+        return datetime.strptime(date_str, "%B %d, %Y").date()
+    except Exception:
+        return None
+
 def transform_entry(entry):
     return {"program": f"{entry.get('university')} - {entry.get('program_name')}",
             "comments": entry.get('comment'),
-            "date_added": entry.get('date_added'),
+            "date_added": _parse_date(entry.get('date_added')),
             "url": entry.get('url_link'),
             "status": entry.get('status'),
             "term": entry.get('term'),
             "us_or_international": entry.get('origin'),
-            "gpa": float(entry.get('gpa')),
-            "gre": float(entry.get('gre_general')),
-            "gre_v": float(entry.get('gre_verbal')),
-            "gre_aw": float(entry.get('gre_aw')),
+            "gpa": _try_float(entry.get('gpa')),
+            "gre": _try_float(entry.get('gre_general')),
+            "gre_v": _try_float(entry.get('gre_verbal')),
+            "gre_aw": _try_float(entry.get('gre_aw')),
             "degree": entry.get('degree'),
     }
 
@@ -75,16 +88,19 @@ def insert_entry(cur, entry):
     )
     cur.execute(insert_query, values)
 
+def clear_table(conn):
+    with conn.cursor() as cur:
+        cur.execute("DELETE FROM applicants")
+    conn.commit()
+
 if __name__ == "__main__":
     connection = create_connection()
     create_table(connection)
-
+    clear_table(connection)
     raw_entries = load_json_data('applicant_data.json')
-
     with connection.cursor() as cur:
         for raw_entry in raw_entries:
             entry = transform_entry(raw_entry)
             insert_entry(cur,entry)
         connection.commit()
-    
     connection.close()

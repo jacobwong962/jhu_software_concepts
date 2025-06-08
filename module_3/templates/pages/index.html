@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block title %}GradCafe Results{% endblock %}
+
+{% block content %}
+  <div class="card shadow-sm p-4 mb-4">
+    <h4 class="text-secondary">Key Metrics</h4>
+    <ul class="list-group list-group-flush">
+      <li class="list-group-item">🗓️ Fall 2025 applicant count: <strong>{{ fall_2025_count }}</strong></li>
+      <li class="list-group-item">🌍 Percent International: <strong>{{ intl_percent }}%</strong></li>
+      <li class="list-group-item">
+        📊 Averages (Filtered):<br>
+        GPA: <strong>{{ averages[0] }}</strong>,
+        GRE: <strong>{{ averages[1] }}</strong>,
+        GRE V: <strong>{{ averages[2] }}</strong>,
+        GRE AW: <strong>{{ averages[3] }}</strong>
+      </li>
+      <li class="list-group-item">🇺🇸 Average GPA of Americans (Fall 2025): <strong>{{ avg_gpa_american }}</strong></li>
+      <li class="list-group-item">✅ Percent Accepted - Fall 2024: <strong>{{ percent_accepted }}%</strong></li>
+      <li class="list-group-item">🎯 Average GPA of Accepted (Fall 2024): <strong>{{ avg_gpa_accepted }}</strong></li>
+      <li class="list-group-item">🏫 JHU CS Masters Applicants: <strong>{{ jhu_cs_masters }}</strong></li>
+    </ul>
+  </div>
+{% endblock %}

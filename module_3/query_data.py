@@ -1,13 +1,5 @@
 import psycopg2
-
-def create_connection():
-    return psycopg2.connect(
-        dbname="gradcafe",
-        user="postgres",
-        password="POGI",
-        host="localhost",
-        port="5432"
-    )
+from load_data import create_connection
 
 def question_1(connection):
     with connection.cursor() as cur:

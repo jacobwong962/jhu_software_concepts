@@ -51,8 +51,40 @@ def transform_entry(entry):
             "degree": entry.get('degree'),
     }
 
-
+def insert_entry(cur, entry):
+    insert_query = """
+    INSERT INTO applicants (
+        program, comments, date_added, url, status, term,
+        us_or_international, gpa, gre, gre_v, gre_aw, degree
+    )
+    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
+    """
+    values = (
+        entry["program"],
+        entry["comments"],
+        entry["date_added"],
+        entry["url"],
+        entry["status"],
+        entry["term"],
+        entry["us_or_international"],
+        entry["gpa"],
+        entry["gre"],
+        entry["gre_v"],
+        entry["gre_aw"],
+        entry["degree"]
+    )
+    cur.execute(insert_query, values)
 
 if __name__ == "__main__":
     connection = create_connection()
     create_table(connection)
+
+    raw_entries = load_json_data('applicant_data.json')
+
+    with connection.cursor() as cur:
+        for raw_entry in raw_entries:
+            entry = transform_entry(raw_entry)
+            insert_entry(cur,entry)
+        connection.commit()
+    
+    connection.close()

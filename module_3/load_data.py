@@ -3,10 +3,12 @@ import psycopg2
 from datetime import datetime
 
 def load_json_data(file_name):
+    """Reads in a json file and returns it as a Python list of dictionaries."""
     with open(file_name, 'r', encoding='utf-8') as f:
         return json.load(f)
     
 def create_connection():
+    """Creates connection to the local PostgreSQL data base called gradcafe."""
     return psycopg2.connect(
         dbname="gradcafe",
         user="postgres",
@@ -16,6 +18,7 @@ def create_connection():
     )
         
 def create_table(connection):
+    """Creates a PostgreSQL table with the necessary columns and column types."""
     with connection.cursor() as cur:
         cur.execute("""
             CREATE TABLE IF NOT EXISTS applicants (
@@ -38,18 +41,24 @@ def create_table(connection):
         print("Table created successfully.")
 
 def _try_float(val):
+    """
+    Private function to convert a value into a float. Checks for case where the
+    'val' could be NoneType. 
+    """
     try:
         return float(val)
     except (TypeError,ValueError):
         return None
 
 def _parse_date(date_str):
+    """Converts date string into date object"""
     try:
         return datetime.strptime(date_str, "%B %d, %Y").date()
     except Exception:
         return None
 
 def transform_entry(entry):
+    """Transforms one entry from the raw json data into the required format."""
     return {"program": f"{entry.get('university')} - {entry.get('program_name')}",
             "comments": entry.get('comment'),
             "date_added": _parse_date(entry.get('date_added')),
@@ -65,6 +74,7 @@ def transform_entry(entry):
     }
 
 def insert_entry(cur, entry):
+    """Uses a SQL command to insert one entry into the applicants table."""
     insert_query = """
     INSERT INTO applicants (
         program, comments, date_added, url, status, term,
@@ -89,6 +99,10 @@ def insert_entry(cur, entry):
     cur.execute(insert_query, values)
 
 def clear_table(conn):
+    """
+    Clears all data from the applicants table. Used to avoid duplicant entries
+    if running the script more than once.
+    """
     with conn.cursor() as cur:
         cur.execute("DELETE FROM applicants")
     conn.commit()

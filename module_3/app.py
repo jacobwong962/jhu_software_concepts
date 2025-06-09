@@ -1,3 +1,5 @@
+"""Flask application for Module 3 assignment. The website displays the results 
+of my SQL database queries to solve the seven questions from the homework."""
 import psycopg2
 from flask import Flask, render_template
 import load_data

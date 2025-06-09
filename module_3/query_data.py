@@ -2,11 +2,13 @@ import psycopg2
 from load_data import create_connection
 
 def question_1(connection):
+    """Queries the SQL database to solve Question 1 from the assignment."""
     with connection.cursor() as cur:
         cur.execute("SELECT COUNT(*) FROM applicants WHERE term = 'Fall 2025'")
         return cur.fetchone()[0]
     
 def question_2(connection):
+    """Queries the SQL database to solve Question 2 from the assignment."""
     with connection.cursor() as cur:
         cur.execute("""
             SELECT COUNT(*) FROM applicants
@@ -18,6 +20,7 @@ def question_2(connection):
         return round(international/total*100,2)
     
 def question_3(connection):
+    """Queries the SQL database to solve Question 3 from the assignment."""
     with connection.cursor() as cur:
         cur.execute("""
             SELECT
@@ -36,6 +39,7 @@ def question_3(connection):
         return tuple(round(val, 2) if val is not None else None for val in result)
     
 def question_4(connection):
+    """Queries the SQL database to solve Question 4 from the assignment."""
     with connection.cursor() as cur:
         cur.execute("""
             SELECT
@@ -48,6 +52,7 @@ def question_4(connection):
         return round(cur.fetchone()[0],2)
 
 def question_5(connection):
+    """Queries the SQL database to solve Question 5 from the assignment."""
     with connection.cursor() as cur:
         cur.execute("""
             SELECT COUNT(*) FROM applicants
@@ -64,6 +69,7 @@ def question_5(connection):
         return round((accepted / total) * 100, 2)
 
 def question_6(connection):
+    """Queries the SQL database to solve Question 6 from the assignment."""
     with connection.cursor() as cur:
         cur.execute("""
             SELECT AVG(gpa)
@@ -76,6 +82,7 @@ def question_6(connection):
         return round(cur.fetchone()[0], 2)
 
 def question_7(connection):
+    """Queries the SQL database to solve Question 7 from the assignment."""
     with connection.cursor() as cur:
         cur.execute("""
             SELECT COUNT(*)

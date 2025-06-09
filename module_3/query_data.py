@@ -69,7 +69,7 @@ def question_6(connection):
             SELECT AVG(gpa)
             FROM applicants
             WHERE
-                term = 'Fall 2024' AND
+                term = 'Fall 2025' AND
                 status ILIKE '%accept%' AND
                 gpa BETWEEN 0 AND 4.3
         """)

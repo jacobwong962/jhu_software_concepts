@@ -9,7 +9,7 @@ def example_pizza():
 def test_init(example_pizza):
     assert isinstance(example_pizza, Pizza)
     assert example_pizza.crust == "thin"
-    assert example_pizza.sauce == ["pesto"]
+    assert example_pizza.sauces == ["pesto"]
     assert example_pizza.cheese == "mozzarella"
     assert example_pizza.toppings == ["mushroom"]
     assert example_pizza.cost > 0
@@ -20,4 +20,4 @@ def test_str(example_pizza):
 
 @pytest.mark.pizza
 def test_cost(example_pizza):
-    assert example_pizza == 11
+    assert example_pizza.cost() == 11

@@ -1,0 +1,19 @@
+import pytest
+from src.order import Order
+from src.pizza import Pizza
+
+@pytest.mark.order
+@pytest.mark.pizza
+def test_integration():
+    pizza1 = Pizza("gluten_free", ["marinara"], "mozzarella", ["pineapple"])
+    pizza2 = Pizza("thin", ["liv_sauce", "pesto"], "mozzarella", ["mushroom", "pepperoni"])
+
+    order = Order()
+    order.input_pizza(pizza1)
+    order.input_pizza(pizza2)
+
+    assert pizza1 in order.pizzas
+    assert pizza2 in order.pizzas
+    
+    expected_cost = 29 # additive cost of both pizzas
+    assert order.cost == expected_cost

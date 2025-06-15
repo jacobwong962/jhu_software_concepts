@@ -29,7 +29,7 @@ def test_input_pizza(example_pizza):
     order = Order()
     order.input_pizza(example_pizza)
     assert example_pizza in order.pizzas
-    assert order.cost == example_pizza.cost()
+    assert order.cost == example_pizza._cost()
 
 @pytest.mark.order
 def test_order_paid():

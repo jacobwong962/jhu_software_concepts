@@ -20,4 +20,4 @@ def test_str(example_pizza):
 
 @pytest.mark.pizza
 def test_cost(example_pizza):
-    assert example_pizza.cost() == 11
+    assert example_pizza._cost() == 11

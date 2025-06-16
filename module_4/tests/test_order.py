@@ -2,11 +2,6 @@ import pytest
 from src.order import Order
 from src.pizza import Pizza
 
-@pytest.fixture
-def example_pizza():
-    return Pizza("thin", ["pesto"], "mozzarella", ["mushroom"])
-
-
 @pytest.mark.order
 def test_init():
     order = Order()
@@ -15,9 +10,9 @@ def test_init():
     assert order.paid is False
     
 @pytest.mark.order
-def test_str(example_pizza):
+def test_str():
     order = Order()
-    order.input_pizza(example_pizza)
+    order.input_pizza("thin", ["pesto"], "mozzarella", ["mushroom"])
     expected_output = (
         "Customer Requested:\n"
         "Crust: thin, Sauce: ['pesto'], Cheese: mozzarella, Toppings: ['mushroom'], Cost: 11"
@@ -25,11 +20,10 @@ def test_str(example_pizza):
     assert str(order) == expected_output
 
 @pytest.mark.order
-def test_input_pizza(example_pizza):
+def test_input_pizza():
     order = Order()
-    order.input_pizza(example_pizza)
-    assert example_pizza in order.pizzas
-    assert order.cost == example_pizza._cost()
+    order.input_pizza("thin", ["pesto"], "mozzarella", ["mushroom"])
+    assert order.cost == 11
 
 @pytest.mark.order
 def test_order_paid():

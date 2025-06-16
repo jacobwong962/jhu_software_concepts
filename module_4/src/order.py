@@ -1,4 +1,4 @@
-from pizza import Pizza
+from .pizza import Pizza
 class Order:
     """
     Represents a customer's pizza order, which can include multiple pizzas.

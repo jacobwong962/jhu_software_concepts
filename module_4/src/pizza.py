@@ -1,19 +1,48 @@
 class Pizza:
-#Pizza objects and associated cost
+    """
+    Represents a single pizza with a crust, sauces, cheese, and toppings.
+
+    The cost is calculated at initialization based on selected ingredients.
+    """
     def __init__(self, crust, sauces, cheese, toppings):
+        """
+        Initialize a new Pizza instance. Calculates cost of pizza upon
+        initialization.
+
+        :param crust: The type of crust.
+        :type crust: str
+        :param sauces: A list of sauces applied to the pizza.
+        :type sauces: list
+        :param cheese: The cheese selection for the pizza.
+        :type cheese: str
+        :param toppings: A list of toppings added to the pizza.
+        :type toppings: list
+        """
         self.crust = crust
         self.sauces = sauces
         self.cheese = cheese
         self.toppings = toppings
         self.cost = self._cost()
-        #Initializes a pizza
-        #Set pizza variables
-        #Set cost to create
 
     def __str__(self):
-        return f"Crust: {self.crust}, Sauce: {self.sauces}, Cheese: {self.cheese}, Toppings: {self.toppings}, Cost: {self.cost}"
+        """
+        Return a string representation of the pizza, including ingredients and 
+        cost.
+
+        :return: A formatted string describing the pizza.
+        :rtype: str
+        """
+        return f"Crust: {self.crust}, Sauce: {self.sauces}, Cheese: " \
+            f"{self.cheese}, Toppings: {self.toppings}, Cost: {self.cost}"
 
     def _cost(self):
+        """
+        Internal method to calculate the total cost of the pizza. Costs are 
+        based on the pizza's ingredients.
+
+        :return: The total price of the pizza.
+        :rtype: int
+        """
         crust_costs = {"thin": 5,
                        "thick": 6,
                        "gluten_free": 8
@@ -31,4 +60,4 @@ class Pizza:
         cost += sum(sauce_costs[sauce] for sauce in self.sauces)
         cost += sum(topping_costs[topping] for topping in self.toppings)
 
-        return cost
+        return int(cost)

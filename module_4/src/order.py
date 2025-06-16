@@ -48,9 +48,3 @@ class Order:
         Mark the order as paid by setting the `paid` attribute to True.
         """
         self.paid = True
-
-if __name__ == "__main__":
-    order = Order()
-    order.input_pizza("thin", ["pesto"], "mozzarella", ["mushroom"])
-    order.input_pizza("thick", ["marinara"], "mozzarella", ["mushroom"])
-    print(order)

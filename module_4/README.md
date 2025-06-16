@@ -3,42 +3,19 @@
 # Module 4 Assignment 
 ## Pytest and Sphinx due on 06/17/2025 at 11:59 EST
 
-# How to Launch Flask Application:
-1. Clone the repository from Github and make it your current directory in your terminal.
-2. Set up the virtual enviroment using:
-    python -m venv venv
-    venv\Scripts\activate (for Windows)
-3. Install software from requirements.txt
-    pip install -r requirements.txt
-4. Run app using: $python app.py
-5. Open a web browser and visit 'http://localhost:8000' into the URL search bar.
+# My Pizza Ordering Application:
+ReadtheDocs Link:
+https://module-4-pizza-application.readthedocs.io/en/latest/order.html
 
 # Approach:
+My Pizza Ordering application was built with two modules:
+- order.py
+- pizza.py
+These modules were built with fairly simple code, utilizing Classes to represent Pizza objects, and Order objects. The Pizza objects were built with very simple functionality, with the ability to define all of the pizza's toppings and the pizzas' corresponding price. The Order class consisted of a method to add pizzas to an order and to flag whether a pizza has been ordered or not.
 
-My approach to this assignment was to organize my code into 3 Python modules:
-- load_data.py
-- query_data.py
-- app.py
+This application was developped using Test-Driven Development. Each method in the classes had a corresponding unit test, and the to modules were tested together in a single integration test. These tests were carried out using the pytest framework. Each test was denoted with a marker indicating it being an 'order' test or a 'pizza' test. The pizza test module also used a fixture to instantiate a pizza object. All tests have been confirmed to pass.
 
-## load_data.py:
-There are 8 user defined functions in load_data.py:
-- load_json_data(): Loads the GradCafe applicant data from a JSON file and returns it as a list of dictionaries.
-- create_connection(): Establishes a connection to the local PostgreSQL database using the psycopg2 library.
-- create_table(): Uses a SQL command to create a PostgreSQL table called 'applicants', if it doesn't already exist.
-- _try_float(): Attempts to convert a value to a float; returns None if conversion fails (I made this function over using the built-in float() function because if a value is NoneType, float() raises an error).
-- _parse_date(): Converts date strings into datetime.date objects. Returns None on failure.
-- transform_entry(): Transforms each entry into a cleaned dictionary matching the correct format.
-- insert_entry(): Executes an SQL INSERT INTO query to insert a new entry into the table.
-- clear_table(): Deletes all data from the applicants table. Used to avoid duplicating entries in the table if running the script more than once.
-
-
-## query_data.py:
-There are 7 user defined functions in query_data(). Each function executes a SQL query to pull information from the PostgreSQL data base. The functions are organized with a corresponding Analysis Question from this week's assignment.
-
-## app.py:
-When run, it creates a Flask application to display the results of my queries from query_data.py. It utilizes blueprints and templates to create a single page site that displays my answers for each of the Analysis Questions.
-
-
+Both modules were documented using Sphinx docstrings. We generated html for the documentation in the ReadtheDocs format. The documentation is presented online with the link shared above.
 
 # Known Bugs:
 None

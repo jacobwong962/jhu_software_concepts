@@ -1,12 +1,17 @@
+"""
+This module creates functions that convert the raw data from the file called
+'applicant_data.json' and uploads it to a PostgreSQL database.
+"""
 import json
-import psycopg2
 from datetime import datetime
+import psycopg2
+
 
 def load_json_data(file_name):
     """Reads in a json file and returns it as a Python list of dictionaries."""
     with open(file_name, 'r', encoding='utf-8') as f:
         return json.load(f)
-    
+
 def create_connection():
     """Creates connection to the local PostgreSQL data base called gradcafe."""
     return psycopg2.connect(
@@ -16,10 +21,10 @@ def create_connection():
         host="localhost",
         port="5432"
     )
-        
-def create_table(connection):
+
+def create_table(db_connection):
     """Creates a PostgreSQL table with the necessary columns and column types."""
-    with connection.cursor() as cur:
+    with db_connection.cursor() as cur:
         cur.execute("""
             CREATE TABLE IF NOT EXISTS applicants (
                 p_id SERIAL PRIMARY KEY,
@@ -37,7 +42,7 @@ def create_table(connection):
                 degree TEXT
             )"""
         )
-        connection.commit()
+        db_connection.commit()
         print("Table created successfully.")
 
 def _try_float(val):
@@ -54,7 +59,7 @@ def _parse_date(date_str):
     """Converts date string into date object"""
     try:
         return datetime.strptime(date_str, "%B %d, %Y").date()
-    except Exception:
+    except ValueError:
         return None
 
 def transform_entry(entry):
@@ -112,9 +117,9 @@ if __name__ == "__main__":
     create_table(connection)
     clear_table(connection)
     raw_entries = load_json_data('applicant_data.json')
-    with connection.cursor() as cur:
+    with connection.cursor() as db_cursor:
         for raw_entry in raw_entries:
-            entry = transform_entry(raw_entry)
-            insert_entry(cur,entry)
+            reformatted_entry = transform_entry(raw_entry)
+            insert_entry(db_cursor,reformatted_entry)
         connection.commit()
     connection.close()

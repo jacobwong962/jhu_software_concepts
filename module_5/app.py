@@ -1,6 +1,5 @@
 """Flask application for Module 3 assignment. The website displays the results 
 of my SQL database queries to solve the seven questions from the homework."""
-import psycopg2
 from flask import Flask, render_template
 import load_data
 from query_data import (question_1,question_2,question_3,question_4,question_5,
@@ -10,6 +9,7 @@ app = Flask(__name__)
 
 @app.route('/')
 def index():
+    """Renders the home page of the application, called 'index'."""
     conn = load_data.create_connection()
     analysis_results = {
         "fall_2025_count": question_1(conn),

@@ -2,8 +2,8 @@
 This module uses SQL queries to answer the seven analysis questions from the
 module 3 assignment.
 """
-from load_data import create_connection
 from psycopg2 import sql
+from load_data import create_connection
 
 def question_1(connection):
     """Queries the SQL database to solve Question 1 from the assignment."""

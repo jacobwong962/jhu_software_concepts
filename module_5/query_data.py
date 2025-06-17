@@ -72,29 +72,47 @@ def question_3(connection):
 def question_4(connection):
     """Queries the SQL database to solve Question 4 from the assignment."""
     with connection.cursor() as cur:
-        cur.execute("""
-            SELECT
-                AVG(gpa)
-            FROM applicants
+        statement = sql.SQL("""
+            SELECT AVG(gpa) FROM {table}
             WHERE
-                us_or_international = 'American' AND
-                term = 'Fall 2025'
-        """)
+                us_or_international = {us_or_international}
+                AND term = {term}
+            LIMIT 1
+        """).format(
+            table = sql.Identifier("applicants"),
+            us_or_international = sql.Literal("American"),
+            term = sql.Literal("Fall 2025")
+        )
+        cur.execute(statement)
         return round(cur.fetchone()[0],2)
 
 def question_5(connection):
     """Queries the SQL database to solve Question 5 from the assignment."""
     with connection.cursor() as cur:
-        cur.execute("""
-            SELECT COUNT(*) FROM applicants
-            WHERE term = 'Fall 2025'
-        """)
+        # Counts the total number of Fall 2025 applicants
+        statement_1 = sql.SQL("""
+            SELECT COUNT(*) from {table}
+            WHERE term = {term}
+            LIMIT 1
+        """).format(
+            table = sql.Identifier("applicants"),
+            term = sql.Literal("Fall 2025")
+        )
+        cur.execute(statement_1)
         total = cur.fetchone()[0]
 
-        cur.execute("""
-            SELECT COUNT(*) FROM applicants
-            WHERE term = 'Fall 2025' AND status ILIKE '%accept%'
-        """)
+        # Counts the total number of Fall 2025 applicants that were accepted
+        statement_2 = sql.SQL("""
+            SELECT COUNT(*) FROM {table}
+            WHERE 
+                term = {term}
+                AND status ILIKE '%accept%'
+            LIMIT 1
+        """).format(
+            table = sql.Identifier("applicants"),
+            term = sql.Literal("Fall 2025")
+        )
+        cur.execute(statement_2)
         accepted = cur.fetchone()[0]
 
         return round((accepted / total) * 100, 2)
@@ -102,27 +120,35 @@ def question_5(connection):
 def question_6(connection):
     """Queries the SQL database to solve Question 6 from the assignment."""
     with connection.cursor() as cur:
-        cur.execute("""
-            SELECT AVG(gpa)
-            FROM applicants
+        statement = sql.SQL("""
+            SELECT AVG(gpa) FROM {table}
             WHERE
-                term = 'Fall 2025' AND
+                term = {term} AND
                 status ILIKE '%accept%' AND
                 gpa BETWEEN 0 AND 4.3
-        """)
+            LIMIT 1
+        """).format(
+            table = sql.Identifier("applicants"),
+            term = sql.Literal("Fall 2025")
+        )
+        cur.execute(statement)
         return round(cur.fetchone()[0], 2)
 
 def question_7(connection):
     """Queries the SQL database to solve Question 7 from the assignment."""
     with connection.cursor() as cur:
-        cur.execute("""
+        statement = sql.SQL("""
             SELECT COUNT(*)
-            FROM applicants
+            FROM {table}
             WHERE
                 program ILIKE '%johns hopkins%' AND
                 program ILIKE '%computer science%' AND
                 degree ILIKE '%master%'
-        """)
+            LIMIT 1
+        """).format(
+            table=sql.Identifier("applicants")
+        )
+        cur.execute(statement)
         return cur.fetchone()[0]
 
 if __name__ == "__main__":

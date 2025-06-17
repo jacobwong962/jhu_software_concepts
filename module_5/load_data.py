@@ -5,6 +5,7 @@ This module creates functions that convert the raw data from the file called
 import json
 from datetime import datetime
 import psycopg2
+from psycopg2 import sql
 
 
 def load_json_data(file_name):
@@ -25,8 +26,8 @@ def create_connection():
 def create_table(db_connection):
     """Creates a PostgreSQL table with the necessary columns and column types."""
     with db_connection.cursor() as cur:
-        cur.execute("""
-            CREATE TABLE IF NOT EXISTS applicants (
+        statement = sql.SQL("""
+            CREATE TABLE IF NOT EXISTS {table} (
                 p_id SERIAL PRIMARY KEY,
                 program TEXT,
                 comments TEXT,
@@ -40,8 +41,11 @@ def create_table(db_connection):
                 gre_v FLOAT,
                 gre_aw FLOAT,
                 degree TEXT
-            )"""
+            )
+        """).format(
+            table=sql.Identifier("applicants")
         )
+        cur.execute(statement)
         db_connection.commit()
         print("Table created successfully.")
 
@@ -80,36 +84,42 @@ def transform_entry(entry):
 
 def insert_entry(cur, entry):
     """Uses a SQL command to insert one entry into the applicants table."""
-    insert_query = """
-    INSERT INTO applicants (
-        program, comments, date_added, url, status, term,
-        us_or_international, gpa, gre, gre_v, gre_aw, degree
+    statement = sql.SQL("""
+        INSERT INTO {table} (
+            program, comments, date_added, url, status, term,
+            us_or_international, gpa, gre, gre_v, gre_aw, degree
+        )
+        VALUES (
+            {program}, {comments}, {date_added}, {url}, {status}, {term},
+            {us_or_international}, {gpa}, {gre}, {gre_v}, {gre_aw}, {degree}
+        )
+    """).format(
+        table=sql.Identifier("applicants"),
+        program=sql.Literal(entry["program"]),
+        comments=sql.Literal(entry["comments"]),
+        date_added=sql.Literal(entry["date_added"]),
+        url=sql.Literal(entry["url"]),
+        status=sql.Literal(entry["status"]),
+        term=sql.Literal(entry["term"]),
+        us_or_international=sql.Literal(entry["us_or_international"]),
+        gpa=sql.Literal(entry["gpa"]),
+        gre=sql.Literal(entry["gre"]),
+        gre_v=sql.Literal(entry["gre_v"]),
+        gre_aw=sql.Literal(entry["gre_aw"]),
+        degree=sql.Literal(entry["degree"])
     )
-    VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
-    """
-    values = (
-        entry["program"],
-        entry["comments"],
-        entry["date_added"],
-        entry["url"],
-        entry["status"],
-        entry["term"],
-        entry["us_or_international"],
-        entry["gpa"],
-        entry["gre"],
-        entry["gre_v"],
-        entry["gre_aw"],
-        entry["degree"]
-    )
-    cur.execute(insert_query, values)
+    cur.execute(statement)
 
 def clear_table(conn):
     """
-    Clears all data from the applicants table. Used to avoid duplicant entries
+    Clears all data from the applicants table. Used to avoid duplicate entries
     if running the script more than once.
     """
     with conn.cursor() as cur:
-        cur.execute("DELETE FROM applicants")
+        statement = sql.SQL("DELETE FROM {table}").format(
+            table=sql.Identifier("applicants")
+        )
+        cur.execute(statement)
     conn.commit()
 
 if __name__ == "__main__":

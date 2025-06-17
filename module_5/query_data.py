@@ -3,41 +3,69 @@ This module uses SQL queries to answer the seven analysis questions from the
 module 3 assignment.
 """
 from load_data import create_connection
+from psycopg2 import sql
 
 def question_1(connection):
     """Queries the SQL database to solve Question 1 from the assignment."""
     with connection.cursor() as cur:
-        cur.execute("SELECT COUNT(*) FROM applicants WHERE term = 'Fall 2025'")
+        statement = sql.SQL("""
+            SELECT COUNT(*)
+            FROM {table}
+            WHERE term = {term}
+            LIMIT 1
+        """).format(
+            table = sql.Identifier("applicants"),
+            term = sql.Literal("Fall 2025")
+        )
+        cur.execute(statement)
         return cur.fetchone()[0]
 
 def question_2(connection):
     """Queries the SQL database to solve Question 2 from the assignment."""
     with connection.cursor() as cur:
-        cur.execute("""
-            SELECT COUNT(*) FROM applicants
-            WHERE us_or_international = 'International'
-        """)
+        # Finds the total number of international applicants.
+        statement_1 = sql.SQL("""
+            SELECT COUNT(*) FROM {table}
+            WHERE us_or_international = {us_or_international}
+            LIMIT 1
+        """).format(
+            table = sql.Identifier("applicants"),
+            us_or_international = sql.Literal('International')
+        )
+        cur.execute(statement_1)
         international = cur.fetchone()[0]
-        cur.execute("""SELECT COUNT(*) FROM applicants""")
+
+        # Finds the total number of applicants.
+        statement_2 = sql.SQL("""
+            SELECT COUNT(*) FROM {table}
+            LIMIT 1
+        """).format(
+            table = sql.Identifier("applicants")
+        )
+        cur.execute(statement_2)
         total = cur.fetchone()[0]
         return round(international/total*100,2)
 
 def question_3(connection):
     """Queries the SQL database to solve Question 3 from the assignment."""
     with connection.cursor() as cur:
-        cur.execute("""
+        statement = sql.SQL("""
             SELECT
                 AVG(gpa),
                 AVG(gre),
                 AVG(gre_v),
                 AVG(gre_aw)
-            FROM applicants
+            FROM {table}
             WHERE
                 gpa BETWEEN 0 AND 4.3 AND
                 gre BETWEEN 130 AND 170 AND
                 gre_v BETWEEN 130 AND 170 AND
                 gre_aw BETWEEN 0 AND 6
-        """)
+            LIMIT 1
+        """).format(
+            table=sql.Identifier("applicants")
+        )
+        cur.execute(statement)
         result = cur.fetchone()
         return tuple(round(val, 2) if val is not None else None for val in result)
 

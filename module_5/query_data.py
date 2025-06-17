@@ -1,4 +1,7 @@
-import psycopg2
+"""
+This module uses SQL queries to answer the seven analysis questions from the
+module 3 assignment.
+"""
 from load_data import create_connection
 
 def question_1(connection):
@@ -6,7 +9,7 @@ def question_1(connection):
     with connection.cursor() as cur:
         cur.execute("SELECT COUNT(*) FROM applicants WHERE term = 'Fall 2025'")
         return cur.fetchone()[0]
-    
+
 def question_2(connection):
     """Queries the SQL database to solve Question 2 from the assignment."""
     with connection.cursor() as cur:
@@ -18,7 +21,7 @@ def question_2(connection):
         cur.execute("""SELECT COUNT(*) FROM applicants""")
         total = cur.fetchone()[0]
         return round(international/total*100,2)
-    
+
 def question_3(connection):
     """Queries the SQL database to solve Question 3 from the assignment."""
     with connection.cursor() as cur:
@@ -37,7 +40,7 @@ def question_3(connection):
         """)
         result = cur.fetchone()
         return tuple(round(val, 2) if val is not None else None for val in result)
-    
+
 def question_4(connection):
     """Queries the SQL database to solve Question 4 from the assignment."""
     with connection.cursor() as cur:
@@ -95,25 +98,26 @@ def question_7(connection):
         return cur.fetchone()[0]
 
 if __name__ == "__main__":
-    connection = create_connection()
+    db_connection = create_connection()
 
-    result_1 = question_1(connection)
+    result_1 = question_1(db_connection)
     print(f"Fall 2025 applicant count: {result_1}")
 
-    result_2 = question_2(connection)
+    result_2 = question_2(db_connection)
     print(f"Percent International: {result_2:.2f}%")
 
-    result_3 = question_3(connection)
-    print(f"Averages: GPA-{result_3[0]:.2f}, GRE-{result_3[1]:.2f}, GRE V-{result_3[2]:.2f}, GRE AW-{result_3[3]:.2f}")
+    result_3 = question_3(db_connection)
+    print(f"Averages: GPA-{result_3[0]:.2f}, GRE-{result_3[1]:.2f}, "
+          "GRE V-{result_3[2]:.2f}, GRE AW-{result_3[3]:.2f}")
 
-    result_4 = question_4(connection)
+    result_4 = question_4(db_connection)
     print(f"Average GPA of Americans - Fall 2025: {result_4:.2f}")
 
-    result_5 = question_5(connection)
+    result_5 = question_5(db_connection)
     print(f"Percent Accepted - Fall 2025: {result_5:.2f}%")
 
-    result_6 = question_6(connection)
+    result_6 = question_6(db_connection)
     print(f"Average GPA of Accepted - Fall 2025: {result_6:.2f}")
 
-    result_7 = question_7(connection)
+    result_7 = question_7(db_connection)
     print(f"JHU CS Masters Applicants: {result_7}")

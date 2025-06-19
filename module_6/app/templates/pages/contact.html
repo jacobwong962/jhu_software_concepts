@@ -1,0 +1,18 @@
+<!--
+  contact.html
+
+  This child template extends base.html and defines the content for the Contact 
+  page. It includes my email and a link to my LinkedIn page.
+-->
+{% extends 'base.html' %}
+
+{% block header %}
+  <h1>{% block title %}Contacts{% endblock title %}</h1>
+{% endblock header %}
+
+{% block content %}
+  <p class="mx-3">
+    E-mail: jwong86@jh.edu
+  </p>
+  <a href="www.linkedin.com/in/wong-jacob" class="mx-3">LinkedIn</a>
+{% endblock content %}

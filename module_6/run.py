@@ -1,3 +1,4 @@
+"""Runs the main program. Runs the Flask application."""
 import app
 
 if __name__ == "__main__":

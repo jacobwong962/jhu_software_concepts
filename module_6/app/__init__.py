@@ -1,3 +1,4 @@
+"""Defines function create_app() that instantiates a new Flask application."""
 from flask import Flask
 from app import pages
 

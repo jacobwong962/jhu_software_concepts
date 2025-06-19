@@ -1,3 +1,4 @@
+"""Creates the three pages for the Flask application."""
 from flask import Blueprint, render_template
 
 # Instantiates a blueprint for the Flask application
@@ -17,4 +18,3 @@ def projects():
 def contact():
     """Creates the 'contacts' webpage from the 'contacts' Jinja template."""
     return render_template("pages/contact.html", active_page='contact')
-
